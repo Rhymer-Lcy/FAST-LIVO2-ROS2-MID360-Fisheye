@@ -1411,8 +1411,8 @@ void LIVMapper::publish_frame_world(const rclcpp::Publisher<sensor_msgs::msg::Po
     {
       Eigen::Quaterniond q(_state.rot_end);
       fout_lidar_pos << std::fixed << std::setprecision(6);
-      fout_lidar_pos <<  LidarMeasures.measures.back().lio_time << " " << _state.pos_end[0] << " " << _state.pos_end[1] << " " << _state.pos_end[2] << " " << q.w() << " " << q.x() << " " << q.y()
-          << " " << q.z() << " " << endl;
+      fout_lidar_pos <<  LidarMeasures.measures.back().lio_time << " " << _state.pos_end[0] << " " << _state.pos_end[1] << " " << _state.pos_end[2] << " " << q.x() << " " << q.y() << " " << q.z()
+          << " " << q.w() << " " << endl;
     }
   }
   if (img_save_en && LidarMeasures.lio_vio_flg == VIO)
