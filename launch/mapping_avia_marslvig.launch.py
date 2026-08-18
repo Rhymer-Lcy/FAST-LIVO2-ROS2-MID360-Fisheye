@@ -91,6 +91,7 @@ def generate_launch_description():
             name="laserMapping",
             parameters=[
                 avia_params_file,
+                camera_params_file,
             ],
             # https://docs.ros.org/en/humble/How-To-Guides/Getting-Backtraces-in-ROS-2.html
             prefix=[
