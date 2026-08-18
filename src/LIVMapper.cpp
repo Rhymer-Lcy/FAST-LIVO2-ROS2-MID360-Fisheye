@@ -309,17 +309,17 @@ void LIVMapper::initializeSubscribersAndPublishers(rclcpp::Node::SharedPtr &node
 {
   image_transport::ImageTransport it(this->node);
   if (p_pre->lidar_type == AVIA) {
-    sub_pcl = this->node->create_subscription<livox_ros_driver2::msg::CustomMsg>(lid_topic, 200000, std::bind(&LIVMapper::livox_pcl_cbk, this, std::placeholders::_1));
+    sub_pcl = this->node->create_subscription<livox_interfaces::msg::CustomMsg>(lid_topic, 10, std::bind(&LIVMapper::livox_pcl_cbk, this, std::placeholders::_1));
   } else {
-    sub_pcl = this->node->create_subscription<sensor_msgs::msg::PointCloud2>(lid_topic, 200000, std::bind(&LIVMapper::standard_pcl_cbk, this, std::placeholders::_1));
+    sub_pcl = this->node->create_subscription<sensor_msgs::msg::PointCloud2>(lid_topic, 10, std::bind(&LIVMapper::standard_pcl_cbk, this, std::placeholders::_1));
   }
-  sub_imu = this->node->create_subscription<sensor_msgs::msg::Imu>(imu_topic, 200000, std::bind(&LIVMapper::imu_cbk, this, std::placeholders::_1));
+  sub_imu = this->node->create_subscription<sensor_msgs::msg::Imu>(imu_topic, 2000, std::bind(&LIVMapper::imu_cbk, this, std::placeholders::_1));
   if (enable_image_processing) {
     sub_img_compressed = this->node->create_subscription<sensor_msgs::msg::CompressedImage>(
-      img_topic, 200000, std::bind(&LIVMapper::jpeg_callback, this, std::placeholders::_1));
+      img_topic, 10, std::bind(&LIVMapper::jpeg_callback, this, std::placeholders::_1));
   } else {
     sub_img = this->node->create_subscription<sensor_msgs::msg::Image>(
-      img_topic, 200000, std::bind(&LIVMapper::img_cbk, this, std::placeholders::_1));
+      img_topic, 10, std::bind(&LIVMapper::img_cbk, this, std::placeholders::_1));
   }
   pubLaserCloudFullRes = this->node->create_publisher<sensor_msgs::msg::PointCloud2>("/cloud_registered", 100);
   pubNormal = this->node->create_publisher<visualization_msgs::msg::MarkerArray>("/visualization_marker", 100);
@@ -887,11 +887,11 @@ void LIVMapper::standard_pcl_cbk(const sensor_msgs::msg::PointCloud2::ConstShare
   sig_buffer.notify_all();
 }
 
-void LIVMapper::livox_pcl_cbk(const livox_ros_driver2::msg::CustomMsg::ConstSharedPtr &msg_in)
+void LIVMapper::livox_pcl_cbk(const livox_interfaces::msg::CustomMsg::ConstSharedPtr &msg_in)
 {
   if (!lidar_en) return;
   mtx_buffer.lock();
-  livox_ros_driver2::msg::CustomMsg::SharedPtr msg(new livox_ros_driver2::msg::CustomMsg(*msg_in));
+  livox_interfaces::msg::CustomMsg::SharedPtr msg(new livox_interfaces::msg::CustomMsg(*msg_in));
   if (abs(last_timestamp_imu - stamp2Sec(msg->header.stamp)) > 1.0 && !imu_buffer.empty())
   {
     double timediff_imu_wrt_lidar = last_timestamp_imu - stamp2Sec(msg->header.stamp);

@@ -28,7 +28,8 @@
   <build_depend>tf2_ros</build_depend>
   <build_depend>pcl_ros</build_depend>
   <build_depend>pcl_conversions</build_depend>
-  <build_depend>livox_ros_driver2</build_depend>
+  <build_depend>livox_interfaces</build_depend>
+  <exec_depend>livox_interfaces</exec_depend>
   <build_depend>vikit_common</build_depend>
   <build_depend>vikit_ros</build_depend>
   <build_depend>cv_bridge</build_depend>

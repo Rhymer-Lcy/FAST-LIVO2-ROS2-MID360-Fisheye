@@ -1,1 +1,7 @@
-build/*
+Log/
+build/
+install/
+log/
+*.bag
+*.db3
+datasets/

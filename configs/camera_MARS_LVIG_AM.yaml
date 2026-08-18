@@ -1,0 +1,17 @@
+# MARS-LVIG, интринсики для AMtown / AMvalley (в оригинале закомментированы)
+/**:
+  ros__parameters:
+    camera:
+      model: Pinhole
+      # AMtown / AMvalley  (активный блок)
+      width: 2448
+      height: 2048
+      scale: 0.25
+      fx: 1453.88
+      fy: 1452.85
+      cx: 1182.53
+      cy: 1045.82
+      d0: -0.052
+      d1: 0.1168
+      d2: 0.0015
+      d3: 0.00013
